@@ -1,0 +1,47 @@
+@import "../public/theme.css";
+@import "primereact/resources/primereact.min.css"; 
+@font-face {
+  font-family: 'icomoon';
+  src:  url('assets/icomoon.eot?28au2j');
+  src:  url('assets/icomoon.eot?28au2j#iefix') format('embedded-opentype'),
+    url('assets/icomoon.ttf?28au2j') format('truetype'),
+    url('assets/icomoon.woff?28au2j') format('woff'),
+    url('assets/icomoon.svg?28au2j#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --main-color: '#800080';
+
+  --icon-family: "icomoon";
+  --icon-hamburger: "\e9bd";
+  --icon-exit: "\ea0f";
+  --icon-facebook: "\ea91";
+  --icon-filter: "\ea5b";
+  --icon-check: "\ea10";
+  --icon-play: "\ea1c";
+  --icon-stop: "\ea1e";
+  --icon-kebab: "\e900";
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  height: 100vh;
+  margin: 0;
+}
