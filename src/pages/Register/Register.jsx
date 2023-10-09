@@ -7,6 +7,15 @@ import CButton from '../../shared-components/CButton/CButton';
 import axios from '../../lib/axios';
 
 export default function Register() {
+  const { mutate } = useMutation({
+    mutationFn: (userDetails) => register(userDetails),
+    onSuccess: () => {
+      toast.setToaster({severity: 'success', detail: "Successfully register. Please check your email!" });
+    },
+    onerror: () => {
+      setError(error.response.data.message);
+    }
+  });
     const { register, handleSubmit, formState: { errors }, control } = useForm({ mode: 'all' });
     const [error, setError] = useState(null);
     function onSubmit(data) {

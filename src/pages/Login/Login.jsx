@@ -9,17 +9,22 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
 
 export default function Login() {
+  const { mutate } = useMutation({
+    mutationFn: (userDetails) => login(userDetails),
+    onSuccess: () => {
+      authContext.setisAuthenticated(true);
+      navigate("/");
+    },
+    onerror: () => {
+      setError("Wrong email or password!");
+    }
+  });
   const { register, handleSubmit, formState: { errors }, control } = useForm({ mode: 'all' });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const authContext = useAuthContext();
-  function onSubmit(data) {
-    login(data).then(r => {
-      authContext.setisAuthenticated(true);
-      navigate("/");
-    }).catch(err => {
-      setError("Wrong email or password!");
-    });
+  function onSubmit(userData) {
+    mutate(userData);
   }
 
   return (
