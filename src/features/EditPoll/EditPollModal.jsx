@@ -4,12 +4,14 @@ import { EditPollModalStyled } from './EditPollModal.styled'
 import CButton from '../../shared-components/CButton/CButton';
 import { useFieldArray, useForm } from 'react-hook-form';
 import CInput from '../../shared-components/CInput/CInput';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getPollByGuid, updatePoll } from '../../services/pollService';
-import { usetToastConext } from '../../context/ToastContext';
+import { useCallback } from 'react';
+import { useToast } from '../../hooks/useToast';
 
 export default function EditPollModal({ visible, header, pollData, onHide }) {
-  const toast = usetToastConext();
+  const toastApi = useToast();
+  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     enabled: pollData ? true : false,
     queryKey: ['events', pollData?.eventGuid],
@@ -20,7 +22,8 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
     mutationKey: ['events', pollData?.eventGuid],
     mutationFn: (updatedPoll) => updatePoll(updatedPoll),
     onSuccess: () => {
-      toast.setToaster({severity: 'success', detail: "Successfully updated event!" });
+      queryClient.invalidateQueries( ['events'], { exact: true });
+      toastApi({severity: 'success', detail: "Successfully updated event!" });
     }
   });
 
@@ -28,6 +31,11 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
   const { fields, remove, append } = useFieldArray({
     name: "options",
     control: control
+  });
+
+  const onHideModal = useCallback(() =>  {
+    onHide();
+    reset();
   });
 
   function onEdit(pollData) {
@@ -55,7 +63,7 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
   };
 
   return (
-    <Dialog visible={visible} header={header} onHide={onHide} draggable={false} style={{ width: '50vh' }}>
+    <Dialog visible={visible} header={header} onHide={onHideModal} draggable={false} style={{ width: '50vh', height: '500px' }}>
         <EditPollModalStyled>
         <form onSubmit={handleSubmit(onEdit,onErrors)}>
           <div>

@@ -5,8 +5,11 @@ import { useAuthContext } from '../../context/AuthContext';
 import { logout } from '../../services/authService';
 
 export default function NavBarLayout() {
-  const [isActive, setIsActive] = useState(false);
-  const { isAuthenticated } = useAuthContext();
+  const [isActive, setIsActive] = useState(null);
+  const { isAuthenticated, isLoading } = useAuthContext();
+
+  if(isLoading) return null;
+  
   function toggleMenu(v) {
     setIsActive(v);
   };
@@ -18,7 +21,6 @@ export default function NavBarLayout() {
       console.log("wtf?");
     })
   }
-
   return (
     <>
       <StyledNavBar>

@@ -4,18 +4,18 @@ import { Dialog } from 'primereact/dialog'
 import CButton from '../../shared-components/CButton/CButton';
 import CInput from '../../shared-components/CInput/CInput';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { usetToastConext } from '../../context/ToastContext';
 import { useMutation } from 'react-query';
 import { createPoll } from '../../services/pollService';
+import { useToast } from '../../hooks/useToast';
 
 export default function CreatePollModal({ visible, header, onHide }) {
-  const toast = usetToastConext();
+  const toastApi = useToast();
   const { mutate } = useMutation({
     mutationKey: ['events'],
     mutationFn: (data) => createPoll(data),
     onSuccess: () => {
       onHideModal();
-      toast.setToaster({severity: 'success', detail: "Successfully created event!" });
+      toastApi({severity: 'success', detail: "Successfully created event!" });
     }
   });
 
@@ -27,6 +27,11 @@ export default function CreatePollModal({ visible, header, onHide }) {
   const { fields, remove, append } = useFieldArray({
     name: "options",
     control: control
+  });
+
+  const onHideModal = useCallback(() =>  {
+    onHide();
+    reset();
   });
 
   function onSubmit(pollData) { 
@@ -56,13 +61,8 @@ export default function CreatePollModal({ visible, header, onHide }) {
     }
   };
 
-  const onHideModal = useCallback(() =>  {
-    onHide();
-    reset();
-  });
-
   return (
-    <Dialog visible={visible} onHide={onHideModal} draggable={false} style={{ width: '50vh' }} header={header}>
+    <Dialog visible={visible} onHide={onHideModal} draggable={false} style={{ width: '50vh', height: '500px' }} header={header}>
       <CreatePollModalStyled>
         <form onSubmit={handleSubmit(onSubmit,onErrors)}>
           <div>

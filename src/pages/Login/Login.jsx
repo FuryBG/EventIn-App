@@ -7,17 +7,19 @@ import CButton from '../../shared-components/CButton/CButton';
 import { login } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
+import { useMutation } from 'react-query';
 
 export default function Login() {
   const { mutate } = useMutation({
     mutationFn: (userDetails) => login(userDetails),
     onSuccess: () => {
-      authContext.setisAuthenticated(true);
+      authContext.refetch();
       navigate("/");
     },
-    onerror: () => {
+    onError: () => {
       setError("Wrong email or password!");
-    }
+    },
+    retry: false
   });
   const { register, handleSubmit, formState: { errors }, control } = useForm({ mode: 'all' });
   const [error, setError] = useState(null);

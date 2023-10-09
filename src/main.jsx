@@ -7,6 +7,7 @@ import Home from './pages/Home/Home.jsx';
 import NavBarLayout from './layouts/NavBarLayout/NavBarLayout';
 import AuthContextProvider from './context/AuthContext.jsx';
 import ToastContextProvider from './context/ToastContext';
+import { PrimeReactProvider } from 'primereact/api';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const Login = React.lazy(() => import('./pages/Login/Login'))
@@ -46,11 +47,13 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
+    <PrimeReactProvider>
     <AuthContextProvider>
       <ToastContextProvider>
         <RouterProvider router={router}></RouterProvider>
       </ToastContextProvider>
     </AuthContextProvider>
+    </PrimeReactProvider>
   </QueryClientProvider>
 
 )

@@ -11,15 +11,20 @@ import StopButton from '../../shared-components/StopButton/StopButton';
 import EditPollModal from '../../features/EditPoll/EditPollModal';
 import { useQuery } from 'react-query';
 import { getUserPolls } from '../../services/pollService';
+import { useToast } from '../../hooks/useToast';
 
 export default function Home() {
   const [selected, setSelected] = useState(null);
-  const [showDialogCreate, setShowDialogCreate] = useState(false);
+  const [showDialogCreate, setShowDialogCreate] = useState(null);
   const [showDialogEdit, setShowDialogEdit] = useState();
-  const [showDialogDelete, setShowDialogDelete] = useState(false);
+  const [showDialogDelete, setShowDialogDelete] = useState(null);
+  const toastApi = useToast();
   const { data, isError, isLoading, refetch } = useQuery({
     queryKey: ['events'],
     queryFn: getUserPolls,
+    onError: (error) => {
+      toastApi({severity: 'error', detail: 'Cannot fetch events! Please try again later.'});
+    }
   });
 
   function onEdit(row) {
@@ -35,7 +40,6 @@ export default function Home() {
   function onToggleCreatePollDialog() {
     setShowDialogCreate(show => !show);
     if(showDialogCreate) {
-      refetch();
       setSelected(null);
     }
   }
@@ -43,7 +47,6 @@ export default function Home() {
   function onToggleDeletePollDialog() {
     setShowDialogDelete(p => !p);
     if(showDialogDelete) {
-      refetch();
       setSelected(null);
     }
   }
@@ -51,7 +54,6 @@ export default function Home() {
   function onToggleEditPollDialog() {
     setShowDialogEdit(p => !p);
     if(showDialogEdit) {
-      refetch();
       setSelected(null);
     }
   }

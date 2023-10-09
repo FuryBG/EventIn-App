@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { getUserDetails } from '../services/authService'
+import { useQuery } from 'react-query';
 const AuthContext = React.createContext();
 
 export function useAuthContext() {
@@ -7,22 +8,21 @@ export function useAuthContext() {
 }
 
 export default function AuthContextProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setisAuthenticated] = useState(false);
-
-  useEffect(() => {
-    getUserDetails().then(r => {
+  const [isAuthenticated, setisAuthenticated] = useState(null);
+  const { data, isError, isLoading, refetch } = useQuery({
+    queryFn: getUserDetails,
+    onSuccess: (data) => {
       setisAuthenticated(true);
-      setUser(r.data);
-      setLoading(false);
-    }).catch(err => {
+    },
+    onError: (error) => {
       setisAuthenticated(false);
-      setLoading(false);
-    });
-  }, []);
+    },
+    refetchOnWindowFocus: false
+    
+  });
+
   return (
-    <AuthContext.Provider value={{ user, loading, isAuthenticated, setisAuthenticated }}>
+    <AuthContext.Provider value={{ data, isLoading, isAuthenticated, setisAuthenticated, refetch }}>
       {children}
     </AuthContext.Provider>
   )
