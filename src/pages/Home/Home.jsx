@@ -23,12 +23,12 @@ export default function Home() {
   });
 
   function onEdit(row) {
-    setSelected(previous => row);
+    setSelected(row);
     setShowDialogEdit(true);
   }
 
   function onDelete(row) {
-    setSelected(previous => row);
+    setSelected(row);
     setShowDialogDelete(true);
   }
 
