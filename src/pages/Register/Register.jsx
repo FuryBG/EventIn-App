@@ -4,32 +4,25 @@ import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import CInput from '../../shared-components/CInput/CInput';
 import CButton from '../../shared-components/CButton/CButton';
-import axios from '../../lib/axios';
 
 export default function Register() {
   const { mutate } = useMutation({
     mutationFn: (userDetails) => register(userDetails),
     onSuccess: () => {
-      toast.setToaster({severity: 'success', detail: "Successfully register. Please check your email!" });
+      toast.setToaster({ severity: 'success', detail: "Successfully register. Please check your email!" });
     },
     onerror: () => {
       setError(error.response.data.message);
     }
   });
-    const { register, handleSubmit, formState: { errors }, control } = useForm({ mode: 'all' });
-    const [error, setError] = useState(null);
-    function onSubmit(data) {
-      axios.post('account/register', data)
-      .then(result => {
-        console.log(result);
-      })
-      .catch(error => {
-        setError(error.response.data.message);
-      });
-    }
+  const { register, handleSubmit, formState: { errors }, control } = useForm({ mode: 'all' });
+  const [error, setError] = useState(null);
+  function onSubmit(userData) {
+    mutate(userData);
+  }
   return (
     <StyledRegister>
-        <div className='aside'>
+      <div className='aside'>
         <div className='aside-information'>
           <Link to={"/"}>
             <img src='/src/assets/logo.png'></img>
@@ -45,14 +38,14 @@ export default function Register() {
         <div className='form-container'>
           <span>Log in to your account</span>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <span className='error'>{ error }</span>
+            <span className='error'>{error}</span>
             <div className='input-container'>
               <label>Email:</label>
-              <CInput control={control} register={register('email', {required: true})} required={true} ></CInput>
+              <CInput control={control} register={register('email', { required: true })} required={true} ></CInput>
             </div>
             <div className='input-container'>
               <label>First Name:</label>
-              <CInput control={control} register={register('firstName', {required: true})} required={true} ></CInput>
+              <CInput control={control} register={register('firstName', { required: true })} required={true} ></CInput>
             </div>
             <div className='input-container'>
               <label>Last Name:</label>
