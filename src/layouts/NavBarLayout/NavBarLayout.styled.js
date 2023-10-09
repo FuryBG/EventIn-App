@@ -72,7 +72,14 @@ const StyledNavBar = styled.nav`
                 justify-content: center;
                 width: 100%;
                 left: 0;
-                bottom: 2rem;
+                bottom: 0;
+                padding: 1rem 0;
+                .facebook::before {
+                    font-family: var(--icon-family);
+                    content: var(--icon-facebook);
+                    font-size: 20px;
+                    color: #0866ff;
+                }
             }
         }
         .mobile-active {
