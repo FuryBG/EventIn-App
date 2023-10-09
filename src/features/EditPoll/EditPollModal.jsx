@@ -4,14 +4,24 @@ import { EditPollModalStyled } from './EditPollModal.styled'
 import CButton from '../../shared-components/CButton/CButton';
 import { useFieldArray, useForm } from 'react-hook-form';
 import CInput from '../../shared-components/CInput/CInput';
-import { useQuery } from 'react-query';
-import { getPollByGuid } from '../../services/pollService';
+import { useMutation, useQuery } from 'react-query';
+import { getPollByGuid, updatePoll } from '../../services/pollService';
+import { usetToastConext } from '../../context/ToastContext';
 
 export default function EditPollModal({ visible, header, pollData, onHide }) {
+  const toast = usetToastConext();
   const { data, error, isLoading } = useQuery({
     enabled: pollData ? true : false,
-    queryKey: 'event',
+    queryKey: ['events', pollData?.eventGuid],
     queryFn: () => getPollByGuid(pollData?.eventGuid)
+  });
+
+  const { mutate } = useMutation({
+    mutationKey: ['events', pollData?.eventGuid],
+    mutationFn: (updatedPoll) => updatePoll(updatedPoll),
+    onSuccess: () => {
+      toast.setToaster({severity: 'success', detail: "Successfully updated event!" });
+    }
   });
 
   const { register, handleSubmit, reset, formState: { errors }, control } = useForm({ mode: 'onSubmit', values: data });
@@ -22,7 +32,7 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
 
   function onEdit(pollData) {
     pollData.options = pollData.options.filter(o => o.value != '');
-    editPoll(pollData);
+    mutate(pollData);
     onHide();
   }
   function onErrors(v) {

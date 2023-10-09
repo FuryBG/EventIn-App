@@ -18,7 +18,7 @@ export default function Home() {
   const [showDialogEdit, setShowDialogEdit] = useState();
   const [showDialogDelete, setShowDialogDelete] = useState(false);
   const { data, isError, isLoading, refetch } = useQuery({
-    queryKey: 'events',
+    queryKey: ['events'],
     queryFn: getUserPolls
   });
 

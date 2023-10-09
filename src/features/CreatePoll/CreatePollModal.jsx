@@ -11,7 +11,7 @@ import { createPoll } from '../../services/pollService';
 export default function CreatePollModal({ visible, header, onHide }) {
   const toast = usetToastConext();
   const { mutate } = useMutation({
-    mutationKey: 'events',
+    mutationKey: ['events'],
     mutationFn: (data) => createPoll(data),
     onSuccess: () => {
       onHideModal();

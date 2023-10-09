@@ -2,14 +2,21 @@ import { Dialog } from 'primereact/dialog'
 import React from 'react'
 import { DeletePollModalStyled } from './DeletePollModal.styled'
 import CButton from '../../shared-components/CButton/CButton';
-import { useFetcher } from '../../hooks/useFetcher';
+import { useMutation } from 'react-query';
+import { deletePoll } from '../../services/pollService';
 
 export default function DeletePollModal({ visible, header, pollData, onHide }) {
-  const [data, error, isLoading, deletePoll, refetch] = useFetcher('post', "/poll/deletepoll?pollId=" + pollData?.id, "Successfully deleted!");
+  const { mutate } = useMutation({
+    mutationKey: ['events', pollData?.id],
+    mutationFn: (pollId) => deletePoll(pollId),
+    onSuccess: () => {
+      toast.setToaster({severity: 'success', detail: "Successfully deleted event!" });
+      onHide();
+    }
+  });
   
   function onDelete() {
-    deletePoll();
-    onHide();
+    mutate(pollData.id);
   }
 
   return (
