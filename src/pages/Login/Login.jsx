@@ -10,6 +10,10 @@ import { useAuthContext } from '../../context/AuthContext';
 import { useMutation } from 'react-query';
 
 export default function Login() {
+  const { register, handleSubmit, formState: { errors }, control } = useForm({ mode: 'all' });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const authContext = useAuthContext();
   const { mutate } = useMutation({
     mutationFn: (userDetails) => login(userDetails),
     onSuccess: () => {
@@ -21,10 +25,6 @@ export default function Login() {
     },
     retry: false
   });
-  const { register, handleSubmit, formState: { errors }, control } = useForm({ mode: 'all' });
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-  const authContext = useAuthContext();
   function onSubmit(userData) {
     mutate(userData);
   }

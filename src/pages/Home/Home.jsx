@@ -9,9 +9,10 @@ import DeletePollModal from '../../features/DeletePoll/DeletePollModal';
 import PlayButton from '../../shared-components/PlayButton/PlayButton';
 import StopButton from '../../shared-components/StopButton/StopButton';
 import EditPollModal from '../../features/EditPoll/EditPollModal';
-import { useQuery } from 'react-query';
-import { getUserPolls } from '../../services/pollService';
+import { useMutation, useQuery } from 'react-query';
+import { getUserPolls, updatePoll } from '../../services/pollService';
 import { useToast } from '../../hooks/useToast';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const [selected, setSelected] = useState(null);
@@ -19,11 +20,23 @@ export default function Home() {
   const [showDialogEdit, setShowDialogEdit] = useState();
   const [showDialogDelete, setShowDialogDelete] = useState(null);
   const toastApi = useToast();
+  const navigate = useNavigate();
   const { data, isError, isLoading, refetch } = useQuery({
     queryKey: ['events'],
     queryFn: getUserPolls,
     onError: (error) => {
       toastApi({severity: 'error', detail: 'Cannot fetch events! Please try again later.'});
+    }
+  });
+
+  const { mutate } = useMutation({
+    mutationKey: ["events"],
+    mutationFn: (data) => updatePoll(data),
+    onError: (error) => {
+      toastApi({severity: 'error', detail: 'Cannot start event! Please try again later.'});
+    },
+    onSuccess: (data) => {
+      toastApi({severity: 'success', detail: 'Event is successfully started!'});
     }
   });
 
@@ -58,12 +71,18 @@ export default function Home() {
     }
   }
 
-  function onPlay() {
-    console.log("PLAY");
+  function onSeeResults() {
+    navigate("");
   }
 
-  function onStop() {
-    console.log("STOP");
+  function onPlay(row) {
+    row.isActive = true;
+    mutate(row);
+  }
+
+  function onStop(row) {
+    row.isActive = false;
+    mutate(row);
   }
 
   return (
@@ -74,12 +93,12 @@ export default function Home() {
       <div className='user-events'>
       <CResultTable emptyMessage={'You don\'t have any events.'} value={data ? data : []} loading={isLoading} dataKey={'id'}>
         <Column header='Poll' field='title' sortable></Column>
-        <Column style={{width: '5%'}} body={(rowdata) => rowdata.isActive ? <StopButton onClick={onStop}></StopButton> : <PlayButton onClick={onPlay}></PlayButton>}></Column>
-        <Column style={{width: '5%'}} body={(rowdata) => <CMiniMenu model={[
-            { label: "See Results" },
-            { label: "Reset Results", command: () => onReset(rowdata) },
-            { label: "Edit", command: () => onEdit(rowdata) },
-            { label: "Delete", command: () => onDelete(rowdata) },
+        <Column style={{width: '5%'}} body={(rowData) => rowData.isActive ? <StopButton onClick={() => onStop(rowData)}></StopButton> : <PlayButton onClick={() => onPlay(rowData)}></PlayButton>}></Column>
+        <Column style={{width: '5%'}} body={(rowData) => <CMiniMenu model={[
+            { label: "See Results", command: () => onSeeResults(rowData)},
+            { label: "Reset Results", command: () => onReset(rowData) },
+            { label: "Edit", command: () => onEdit(rowData) },
+            { label: "Delete", command: () => onDelete(rowData) },
           ] }
           ></CMiniMenu>}></Column>
       </CResultTable>

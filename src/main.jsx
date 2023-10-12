@@ -9,6 +9,8 @@ import AuthContextProvider from './context/AuthContext.jsx';
 import ToastContextProvider from './context/ToastContext';
 import { PrimeReactProvider } from 'primereact/api';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import GlobalLoader from './shared-components/GlobalLoader/GlobalLoader';
+import NotFound from './shared-components/NotFound/NotFound';
 
 const Login = React.lazy(() => import('./pages/Login/Login'))
 const Register = React.lazy(() => import('./pages/Register/Register'))
@@ -33,15 +35,28 @@ const router = createBrowserRouter([
         children: [
           {
             path: "login",
-            element: <Suspense fallback={<h1>test</h1>}><Login /></Suspense>
+            element: <Suspense fallback={<GlobalLoader></GlobalLoader>}><Login /></Suspense>
           },
           {
             path: "register",
-            element: <Suspense fallback={<h1>test</h1>}><Register /></Suspense>
+            element: <Suspense fallback={<GlobalLoader></GlobalLoader>}><Register /></Suspense>
+          }
+        ]
+      },
+      {
+        path: "/event",
+        children: [
+          {
+            path: ":id",
+            element: <h1>T</h1>
           }
         ]
       }
     ]
+  },
+  {
+    path: "*",
+    element: <NotFound></NotFound>
   }
 ]);
 
