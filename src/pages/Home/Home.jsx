@@ -26,7 +26,8 @@ export default function Home() {
     queryFn: getUserPolls,
     onError: (error) => {
       toastApi({severity: 'error', detail: 'Cannot fetch events! Please try again later.'});
-    }
+    },
+    retry: 0
   });
 
   const { mutate } = useMutation({
@@ -36,7 +37,12 @@ export default function Home() {
       toastApi({severity: 'error', detail: 'Cannot start event! Please try again later.'});
     },
     onSuccess: (data) => {
-      toastApi({severity: 'success', detail: 'Event is successfully started!'});
+      if(data.data.isActive) {
+        toastApi({severity: 'success', detail: 'Event is successfully started!'});
+      }
+      else {
+        toastApi({severity: 'success', detail: 'Event is successfully stopped!'});
+      }
     }
   });
 
@@ -71,8 +77,8 @@ export default function Home() {
     }
   }
 
-  function onSeeResults() {
-    navigate("");
+  function onSeeResults(row) {
+    navigate("/event/" + row.eventGuid);
   }
 
   function onPlay(row) {

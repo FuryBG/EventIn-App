@@ -11,6 +11,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import GlobalLoader from './shared-components/GlobalLoader/GlobalLoader';
 import NotFound from './shared-components/NotFound/NotFound';
+import ViewPoll from './features/ViewPoll/ViewPoll';
 
 const Login = React.lazy(() => import('./pages/Login/Login'))
 const Register = React.lazy(() => import('./pages/Register/Register'))
@@ -47,8 +48,8 @@ const router = createBrowserRouter([
         path: "/event",
         children: [
           {
-            path: ":id",
-            element: <h1>T</h1>
+            path: ":eguid",
+            element: <ViewPoll></ViewPoll>
           }
         ]
       }

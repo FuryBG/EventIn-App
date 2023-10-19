@@ -5,7 +5,7 @@ import CButton from '../../shared-components/CButton/CButton';
 import { useFieldArray, useForm } from 'react-hook-form';
 import CInput from '../../shared-components/CInput/CInput';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { getPollByGuid, updatePoll } from '../../services/pollService';
+import { getPollById, updatePoll } from '../../services/pollService';
 import { useCallback } from 'react';
 import { useToast } from '../../hooks/useToast';
 
@@ -14,8 +14,8 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     enabled: pollData ? true : false,
-    queryKey: ['events', pollData?.eventGuid],
-    queryFn: () => getPollByGuid(pollData?.eventGuid)
+    queryKey: ['events', pollData?.id],
+    queryFn: () => getPollById(pollData?.id)
   });
 
   const { mutate } = useMutation({

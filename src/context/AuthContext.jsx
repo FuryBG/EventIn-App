@@ -17,7 +17,8 @@ export default function AuthContextProvider({ children }) {
     onError: (error) => {
       setisAuthenticated(false);
     },
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    retry: false
     
   });
 

@@ -6,6 +6,9 @@ function getUserPolls() {
 function getPollByGuid(guid) {
     return axios.get("/poll/getpollbyguid?id=" + guid).then(result => result.data);
 }
+function getPollById(id) {
+    return axios.get("/poll/getpollbyid?id=" + id).then(result => result.data);
+}
 function createPoll(data) {
     return axios.post("/poll/createpoll", data).then(result => result.data);
 }
@@ -21,5 +24,6 @@ export {
     getPollByGuid,
     createPoll,
     updatePoll,
-    deletePoll
+    deletePoll,
+    getPollById
 }

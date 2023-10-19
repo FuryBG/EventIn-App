@@ -12,7 +12,7 @@ export default function CInput({ inputKey, register, control, type, required, pl
       haveError = errors[register.name] ? true : false;
     }
     else {
-      let [fieldName, fieldIndex, fieldValudProperty] = register.name.split('.');
+      let [fieldName, fieldIndex, fieldValueProperty] = register.name.split('.');
       if(errors[fieldName] && errors[fieldName][fieldIndex]) {
         haveError = true;
       }
