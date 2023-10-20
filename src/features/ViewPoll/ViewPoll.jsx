@@ -1,27 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ViewPollStyled } from './ViewPoll.styled'
 import { useParams } from 'react-router-dom'
 import useSignalR from '../../hooks/useSignalR';
 import CRadioButton from '../../shared-components/CRadioButton/CRadioButton';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { RadioButton } from 'primereact/radiobutton';
+import { useForm } from 'react-hook-form';
+import CButton from '../../shared-components/CButton/CButton';
 
 export default function ViewPoll() {
     let params = useParams();
     const { data, onVote } = useSignalR(params.eguid);
+    const [ isResult, setisResult ] = useState(null);
     const { register, control, handleSubmit, reset } = useForm({
         mode: 'onSubmit',
-        defaultValues: {
-            id: 0,
-            options: [{ value: "", type: "select" }]
-        },
-        values: data
+        values: {
+            title: data?.title,
+            selectedOption: {}
+        }
     });
-    const { fields, remove, append } = useFieldArray({
-        name: "options",
-        control: control
-      });
+
     if (data == null) return;
+
+    function onSubmit(data) {
+        onVote(JSON.parse(data.selectedOption));
+        setisResult(true);
+    }
 
     return (
         <ViewPollStyled>
@@ -30,16 +32,25 @@ export default function ViewPoll() {
                     <span>What is your favorite color?</span>
                     <span>I</span>
                 </header>
-                <div>
-                    {fields.map((option, index) => {
-                        return (
-                            <div key={index}>
-                                <input register={register(`options`)} type='radio' control={control} value={option.value}></input>
-                                <span>{option.value}</span>
-                            </div>
-                        )
-                    })}
-                </div>
+                {!isResult ?
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        {data.options.map((option, index) => {
+                            return (
+                                <div className='option-container' key={index}>
+                                    <CRadioButton register={register("selectedOption")} control={control} value={JSON.stringify(option)} ></CRadioButton>
+                                    <span>{option.value}</span>
+                                </div>
+                            )
+                        })}
+                        <div className='buttons-container'>
+                            <CButton type={'submit'} text={'Vote'}></CButton>
+                        </div>
+                    </form>
+                    :
+                    <div className='result'>
+                        <h1>{data.options[0].votes.length}</h1>
+                    </div>
+                }
             </div>
         </ViewPollStyled>
     )

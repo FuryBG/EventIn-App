@@ -13,18 +13,19 @@ const ViewPollStyled = styled.div`
             justify-content: space-between;
             border-bottom:  1px solid grey;
         }
-        >div {
+        >form {
             margin: 1rem;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            :hover {
-                    background-color: #2b2b2b;
+            >.option-container {
+                padding: 1rem 0;
+                margin: 1rem 0;
+                border-radius: 0.5rem;
+                overflow: hidden;
+                &:hover {
+                background-color: #2b2b2b;
                 }
-            >div {
-                padding: 1rem;
-                :nth-child(1) {
-                    padding-right: 1rem;
-                }
+            }
+            >.buttons-container {
+                text-align: center;
             }
         }
     }

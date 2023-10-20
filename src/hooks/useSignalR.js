@@ -1,34 +1,35 @@
 import * as signalR from '@microsoft/signalr'
-import { useEffect, useState } from 'react';
-import React from 'react'
+import { useEffect, useState } from 'react'
 
+let connection = new signalR.HubConnectionBuilder()
+.withUrl("https://localhost:7029/poll-event")
+.build();
 
 export default function useSignalR(pollGuid) {
-    let [pollEventData, setPollEventData] = useState(null);
+    let [pollEventData, setPollEventData] = useState();
 
     useEffect(() => {
         connectToHub(pollGuid);
+        return () => {
+            connection.stop();
+        }
     }, []);
 
-    return { data: pollEventData, onVote: () => onPollVote(connection) };
+    return { data: pollEventData, onVote: onPollVote };
 
-    function connectToHub(pollGuid) {
-        let connection = new signalR.HubConnectionBuilder()
-            .withUrl("https://localhost:7029/poll-event")
-            .build();
-
-        connection.start()
-            .then(() => {
-                connection.invoke("JoinRoom", pollGuid);
-                connection.on("PollVote", (data) => onUpdateData(data));
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    async function connectToHub(pollGuid) {
+        try {
+            await connection.start();
+            connection.invoke("JoinRoom", pollGuid);
+            connection.on("PollVote", (data) => onUpdateData(data));
+        }
+        catch(err) {
+            console.log(err);
+        }
     }
 
-    function onPollVote(pollVote, pollGuid) {
-
+    function onPollVote(pollVote) {
+        connection.invoke("PollVote", pollVote, pollGuid);
     }
 
     function onUpdateData(data) {
