@@ -4,16 +4,18 @@ import { Dialog } from 'primereact/dialog'
 import CButton from '../../shared-components/CButton/CButton';
 import CInput from '../../shared-components/CInput/CInput';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { createPoll } from '../../services/pollService';
 import { useToast } from '../../hooks/useToast';
 
 export default function CreatePollModal({ visible, header, onHide }) {
   const toastApi = useToast();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationKey: ['events'],
     mutationFn: (data) => createPoll(data),
     onSuccess: () => {
+      queryClient.invalidateQueries('events');
       onHideModal();
       toastApi({severity: 'success', detail: "Successfully created event!" });
     }

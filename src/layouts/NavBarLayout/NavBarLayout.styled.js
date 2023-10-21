@@ -65,7 +65,7 @@ const StyledNavBar = styled.nav`
                 }
             }
             .footer {
-                border-top: 1px solid black;
+                border-top: 1px solid whitesmoke;
                 position: absolute;
                 display: flex;
                 gap: 1rem;
