@@ -97,7 +97,7 @@ export default function Home() {
         <CButton text={"Create Poll"} onClick={onToggleCreatePollDialog}>Create Poll</CButton>
       </div>
       <div className='user-events'>
-      <CResultTable emptyMessage={'You don\'t have any events.'} value={data ? data : []} loading={isLoading} dataKey={'id'}>
+      <CResultTable emptyMessage={'You don\'t have any events.'} value={data ? data : []} loading={isLoading} dataKey={'pollEventId'}>
         <Column header='Poll' field='title' sortable></Column>
         <Column style={{width: '5%'}} body={(rowData) => rowData.isActive ? <StopButton onClick={() => onStop(rowData)}></StopButton> : <PlayButton onClick={() => onPlay(rowData)}></PlayButton>}></Column>
         <Column style={{width: '5%'}} body={(rowData) => <CMiniMenu model={[
