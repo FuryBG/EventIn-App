@@ -2,23 +2,25 @@ import { Dialog } from 'primereact/dialog'
 import React from 'react'
 import { DeletePollModalStyled } from './DeletePollModal.styled'
 import CButton from '../../shared-components/CButton/CButton';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { deletePoll } from '../../services/pollService';
 import { useToast } from '../../hooks/useToast';
 
 export default function DeletePollModal({ visible, header, pollData, onHide }) {
   const toastApi = useToast();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationKey: ['events', pollData?.id],
+    mutationKey: ['events', pollData?.pollEventId],
     mutationFn: (pollId) => deletePoll(pollId),
     onSuccess: () => {
+      const queryClient = useQueryClient();
       toastApi({severity: 'success', detail: "Successfully deleted event!" });
       onHide();
     }
   });
   
   function onDelete() {
-    mutate(pollData.id);
+    mutate(pollData.pollEventId);
   }
 
   return (

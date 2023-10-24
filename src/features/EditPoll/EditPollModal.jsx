@@ -14,8 +14,8 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     enabled: pollData ? true : false,
-    queryKey: ['events', pollData?.id],
-    queryFn: () => getPollById(pollData?.id)
+    queryKey: ['events', pollData?.pollEventId],
+    queryFn: () => getPollById(pollData?.pollEventId)
   });
 
   const { mutate } = useMutation({
