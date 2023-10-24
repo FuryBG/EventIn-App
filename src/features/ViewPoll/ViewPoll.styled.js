@@ -25,6 +25,11 @@ const ViewPollStyled = styled.div`
                 }
             }
             >.buttons-container {
+                span {
+                    padding: 0 1rem;
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
                 text-align: center;
             }
         }

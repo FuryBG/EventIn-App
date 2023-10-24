@@ -25,6 +25,10 @@ export default function ViewPoll() {
         setisResult(true);
     }
 
+    function onShowResult() {
+        setisResult(true);
+    }
+
     return (
         <ViewPollStyled>
             <div>
@@ -43,12 +47,17 @@ export default function ViewPoll() {
                             )
                         })}
                         <div className='buttons-container'>
+                            <span onClick={onShowResult}>View Result</span>
                             <CButton type={'submit'} text={'Vote'}></CButton>
                         </div>
                     </form>
                     :
                     <div className='result'>
-                        <h1>{data.options[0].precentage}</h1>
+                        {data.options.map((option, index) => {
+                            return (
+                                <h1 key={index}>{option.precentage}</h1>
+                            )
+                        })}
                     </div>
                 }
             </div>
