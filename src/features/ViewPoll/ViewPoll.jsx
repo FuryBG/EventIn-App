@@ -48,7 +48,7 @@ export default function ViewPoll() {
                     </form>
                     :
                     <div className='result'>
-                        <h1>{data.options[0].votes.length}</h1>
+                        <h1>{data.options[0].precentage}</h1>
                     </div>
                 }
             </div>
