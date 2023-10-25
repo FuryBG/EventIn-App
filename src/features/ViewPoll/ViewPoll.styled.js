@@ -24,14 +24,30 @@ const ViewPollStyled = styled.div`
                 background-color: #2b2b2b;
                 }
             }
-            >.buttons-container {
-                span {
-                    padding: 0 1rem;
-                    text-decoration: underline;
-                    cursor: pointer;
+        }
+        .result {
+            >.option-percentage {
+                >.percentage-bar-container {
+                    display: flex;
+                    >span {
+                        display: block;
+                        margin: 1.6rem 0;
+                        background-color: purple;
+                        border-radius: 1rem;
+                    }
+                    h5 {
+                        padding: 0 0.5rem;
+                    }
                 }
-                text-align: center;
             }
+        }
+        .buttons-container {
+            span {
+                padding: 0 1rem;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            text-align: center;
         }
     }
 `;

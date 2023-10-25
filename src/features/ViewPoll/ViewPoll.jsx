@@ -25,8 +25,8 @@ export default function ViewPoll() {
         setisResult(true);
     }
 
-    function onShowResult() {
-        setisResult(true);
+    function onToggleResultVote() {
+        setisResult(prev => !prev);
     }
 
     return (
@@ -34,7 +34,7 @@ export default function ViewPoll() {
             <div>
                 <header>
                     <span>What is your favorite color?</span>
-                    <span>I</span>
+                    <span>{data.votesCount}</span>
                 </header>
                 {!isResult ?
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,7 +47,7 @@ export default function ViewPoll() {
                             )
                         })}
                         <div className='buttons-container'>
-                            <span onClick={onShowResult}>View Result</span>
+                            <span onClick={onToggleResultVote}>View Result</span>
                             <CButton type={'submit'} text={'Vote'}></CButton>
                         </div>
                     </form>
@@ -55,9 +55,20 @@ export default function ViewPoll() {
                     <div className='result'>
                         {data.options.map((option, index) => {
                             return (
-                                <h1 key={index}>{option.precentage}</h1>
+                                <>
+                                <span key={index}>{option.value}</span>
+                                <div className='option-percentage'>
+                                    <div className='percentage-bar-container'>
+                                        <span style={{ width: `${option.precentage}%` }}></span>
+                                        <h5>{option.precentage}%</h5>
+                                    </div>
+                                </div>
+                                </>
                             )
-                        })}
+                        })}                        
+                        <div className='buttons-container'>
+                            <span onClick={onToggleResultVote}>Back to Vote</span>
+                        </div>
                     </div>
                 }
             </div>
