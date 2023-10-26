@@ -12,6 +12,15 @@ const ViewPollStyled = styled.div`
             display: flex;
             justify-content: space-between;
             border-bottom:  1px solid grey;
+            >div {
+                .poll-icon:before {
+                    font-family: var(--icon-family);
+                    content: var(--icon-poll);
+                }
+                .votes-count {
+                    padding: 0 0.2rem;
+                }
+            }
         }
         >form {
             margin: 1rem;

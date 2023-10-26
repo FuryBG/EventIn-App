@@ -34,7 +34,10 @@ export default function ViewPoll() {
             <div>
                 <header>
                     <span>What is your favorite color?</span>
-                    <span>{data.votesCount}</span>
+                    <div>
+                    <span className='votes-count'>{data.votesCount}</span>
+                    <span className='poll-icon'></span>
+                    </div>
                 </header>
                 <div className='result' style={isResult ? null : { left: '-100%', position: "fixed" }}>
                     {data.options.map((option, index) => {
