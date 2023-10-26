@@ -51,7 +51,7 @@ export default function ViewPoll() {
                         )
                     })}
                     <div className='buttons-container'>
-                        <span onClick={onToggleResultVote}>Back to Vote</span>
+                        <span onClick={onToggleResultVote}>Change Vote</span>
                     </div>
                 </div>
                 {!isResult ?

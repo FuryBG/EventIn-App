@@ -27,11 +27,14 @@ const ViewPollStyled = styled.div`
         }
         .result {
             >.option-percentage {
+                height: 1.2rem;
                 >.percentage-bar-container {
                     display: flex;
+                    height: inherit;
+                    align-items: center;
                     >.bar {
                         display: block;
-                        margin: 1.6rem 0;
+                        height: inherit;
                         background-color: purple;
                         border-radius: 1rem;
                         transition: width 1s;
