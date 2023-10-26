@@ -34,6 +34,7 @@ const ViewPollStyled = styled.div`
                         margin: 1.6rem 0;
                         background-color: purple;
                         border-radius: 1rem;
+                        transition: width 2s;
                     }
                     h5 {
                         padding: 0 0.5rem;
