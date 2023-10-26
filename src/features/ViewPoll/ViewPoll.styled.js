@@ -8,6 +8,7 @@ const ViewPollStyled = styled.div`
     color: white;
     padding: 1.5rem;
     >div {
+        padding: 4rem 10.5rem;
         >header {
             display: flex;
             justify-content: space-between;
@@ -68,6 +69,11 @@ const ViewPollStyled = styled.div`
                 cursor: pointer;
             }
             text-align: center;
+        }
+    }
+    @media only screen and (max-width: 900px) {
+        >div {
+            padding: 0;
         }
     }
 `;
