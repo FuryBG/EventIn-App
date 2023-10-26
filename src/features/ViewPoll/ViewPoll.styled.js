@@ -26,12 +26,15 @@ const ViewPollStyled = styled.div`
             }
         }
         .result {
+            position: relative;
             >.option-percentage {
                 height: 1.2rem;
                 >.percentage-bar-container {
                     display: flex;
                     height: inherit;
                     align-items: center;
+                    background-color: #393939;
+                    border-radius: 1rem;
                     >.bar {
                         display: block;
                         height: inherit;
@@ -41,6 +44,10 @@ const ViewPollStyled = styled.div`
                     }
                     h5 {
                         padding: 0 0.5rem;
+                        margin: 0;
+                        position: absolute;
+                        left: 100%;
+                        transition: left 1s;
                     }
                 }
             }

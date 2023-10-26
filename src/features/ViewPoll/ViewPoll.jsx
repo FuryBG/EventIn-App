@@ -44,7 +44,7 @@ export default function ViewPoll() {
                                 <div className='option-percentage'>
                                     <div className='percentage-bar-container'>
                                         <span className='bar' style={isResult ? { width: `${option.precentage}%` } : { width: 0 }}></span>
-                                        <h5>{option.precentage}%</h5>
+                                        <h5 style={isResult ? {left: `${option.precentage - 2}%`} : {left: 0}}>{option.precentage}%</h5>
                                     </div>
                                 </div>
                             </>
@@ -59,7 +59,7 @@ export default function ViewPoll() {
                         {data.options.map((option, index) => {
                             return (
                                 <div className='option-container' key={index}>
-                                    <CRadioButton register={register("selectedOption")} control={control} value={JSON.stringify(option)} ></CRadioButton>
+                                    <CRadioButton register={register("selectedOption", { required: true })} forValue={index} control={control} value={JSON.stringify(option)} ></CRadioButton>
                                     <span>{option.value}</span>
                                 </div>
                             )
