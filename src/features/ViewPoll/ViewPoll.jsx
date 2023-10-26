@@ -9,7 +9,7 @@ import CButton from '../../shared-components/CButton/CButton';
 export default function ViewPoll() {
     let params = useParams();
     const { data, onVote } = useSignalR(params.eguid);
-    const [ isResult, setisResult ] = useState(null);
+    const [isResult, setisResult] = useState(null);
     const { register, control, handleSubmit, reset } = useForm({
         mode: 'onSubmit',
         values: {
@@ -36,6 +36,24 @@ export default function ViewPoll() {
                     <span>What is your favorite color?</span>
                     <span>{data.votesCount}</span>
                 </header>
+                <div className='result' style={isResult ? null : { left: '-100%', position: "fixed" }}>
+                    {data.options.map((option, index) => {
+                        return (
+                            <>
+                                <span key={index}>{option.value}</span>
+                                <div className='option-percentage'>
+                                    <div className='percentage-bar-container'>
+                                        <span className='bar' style={isResult ? { width: `${option.precentage}%` } : { width: 0 }}></span>
+                                        <h5>{option.precentage}%</h5>
+                                    </div>
+                                </div>
+                            </>
+                        )
+                    })}
+                    <div className='buttons-container'>
+                        <span onClick={onToggleResultVote}>Back to Vote</span>
+                    </div>
+                </div>
                 {!isResult ?
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {data.options.map((option, index) => {
@@ -50,27 +68,7 @@ export default function ViewPoll() {
                             <span onClick={onToggleResultVote}>View Result</span>
                             <CButton type={'submit'} text={'Vote'}></CButton>
                         </div>
-                    </form>
-                    :
-                    <div className='result'>
-                        {data.options.map((option, index) => {
-                            return (
-                                <>
-                                <span key={index}>{option.value}</span>
-                                <div className='option-percentage'>
-                                    <div className='percentage-bar-container'>
-                                        <span style={{ width: `${option.precentage}%` }}></span>
-                                        <h5>{option.precentage}%</h5>
-                                    </div>
-                                </div>
-                                </>
-                            )
-                        })}                        
-                        <div className='buttons-container'>
-                            <span onClick={onToggleResultVote}>Back to Vote</span>
-                        </div>
-                    </div>
-                }
+                    </form> : null}
             </div>
         </ViewPollStyled>
     )

@@ -29,12 +29,12 @@ const ViewPollStyled = styled.div`
             >.option-percentage {
                 >.percentage-bar-container {
                     display: flex;
-                    >span {
+                    >.bar {
                         display: block;
                         margin: 1.6rem 0;
                         background-color: purple;
                         border-radius: 1rem;
-                        transition: width 2s;
+                        transition: width 1s;
                     }
                     h5 {
                         padding: 0 0.5rem;
