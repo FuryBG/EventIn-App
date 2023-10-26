@@ -5,6 +5,7 @@ import useSignalR from '../../hooks/useSignalR';
 import CRadioButton from '../../shared-components/CRadioButton/CRadioButton';
 import { useForm } from 'react-hook-form';
 import CButton from '../../shared-components/CButton/CButton';
+import GlobalLoader from '../../shared-components/GlobalLoader/GlobalLoader'
 
 export default function ViewPoll() {
     let params = useParams();
@@ -18,8 +19,7 @@ export default function ViewPoll() {
         }
     });
 
-    if (data == null) return;
-
+    if(data == null) return null;
     function onSubmit(data) {
         onVote(JSON.parse(data.selectedOption));
         setisResult(true);

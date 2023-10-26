@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import CInput from '../../shared-components/CInput/CInput';
 import CButton from '../../shared-components/CButton/CButton';
+import { useMutation } from 'react-query';
 
 export default function Register() {
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (userDetails) => register(userDetails),
     onSuccess: () => {
       toast.setToaster({ severity: 'success', detail: "Successfully register. Please check your email!" });
@@ -62,7 +63,7 @@ export default function Register() {
             <div>
               <Link to={"/auth/login"}>Already have account?</Link>
             </div>
-            <CButton text={"Register"}></CButton>
+            <CButton disabled={isLoading ? true : false} isLoading={isLoading} text={"Register"}></CButton>
           </form>
         </div>
       </div>

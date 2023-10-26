@@ -9,11 +9,11 @@ import { useToast } from '../../hooks/useToast';
 export default function DeletePollModal({ visible, header, pollData, onHide }) {
   const toastApi = useToast();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ['events', pollData?.pollEventId],
     mutationFn: (pollId) => deletePoll(pollId),
     onSuccess: () => {
-      const queryClient = useQueryClient();
+      queryClient.invalidateQueries(['events']);
       toastApi({severity: 'success', detail: "Successfully deleted event!" });
       onHide();
     }
@@ -26,7 +26,7 @@ export default function DeletePollModal({ visible, header, pollData, onHide }) {
   return (
     <Dialog visible={visible} header={header} onHide={onHide} draggable={false} style={{ width: '50vh' }}>
         <DeletePollModalStyled>
-            <CButton onClick={onDelete} text={"Delete"}></CButton>
+            <CButton disabled={isLoading ? true : false} isLoading={isLoading} onClick={onDelete} text={"Delete"}></CButton>
             <span onClick={onHide}>Cancel</span>
         </DeletePollModalStyled>
     </Dialog>

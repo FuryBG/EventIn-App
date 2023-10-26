@@ -11,7 +11,7 @@ import { useToast } from '../../hooks/useToast';
 export default function CreatePollModal({ visible, header, onHide }) {
   const toastApi = useToast();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ['events'],
     mutationFn: (data) => createPoll(data),
     onSuccess: () => {
@@ -80,7 +80,7 @@ export default function CreatePollModal({ visible, header, onHide }) {
             )
           })}
           <div className='footer-buttons'>
-            <CButton type={'submit'} text={'Launch'}></CButton>
+            <CButton disabled={isLoading ? true : false} isLoading={isLoading} type={'submit'} text={'Launch'}></CButton>
           </div>
         </form>
       </CreatePollModalStyled>

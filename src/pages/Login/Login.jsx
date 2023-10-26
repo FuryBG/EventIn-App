@@ -14,7 +14,7 @@ export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const authContext = useAuthContext();
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (userDetails) => login(userDetails),
     onSuccess: () => {
       authContext.refetch();
@@ -59,7 +59,7 @@ export default function Login() {
             <div>
               <Link to={"/auth/forgotpassword"}>Forgot password?</Link>
             </div>
-            <CButton text={"Login"}></CButton>
+            <CButton disabled={isLoading ? true : false} isLoading={isLoading} text={"Login"}></CButton>
           </form>
         </div>
       </div>

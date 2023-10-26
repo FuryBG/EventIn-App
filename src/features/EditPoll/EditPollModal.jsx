@@ -12,13 +12,13 @@ import { useToast } from '../../hooks/useToast';
 export default function EditPollModal({ visible, header, pollData, onHide }) {
   const toastApi = useToast();
   const queryClient = useQueryClient();
-  const { data, error, isLoading } = useQuery({
+  const { data, error } = useQuery({
     enabled: pollData ? true : false,
     queryKey: ['events', pollData?.pollEventId],
     queryFn: () => getPollById(pollData?.pollEventId)
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ['events', pollData?.eventGuid],
     mutationFn: (updatedPoll) => updatePoll(updatedPoll),
     onSuccess: () => {
@@ -79,7 +79,7 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
             )
           })}
           <div className='footer-buttons'>
-            <CButton type={'submit'} text={'Save'}></CButton>
+            <CButton disabled={isLoading ? true : false} isLoading={isLoading} type={'submit'} text={'Save'}></CButton>
           </div>
         </form>
         </EditPollModalStyled>
