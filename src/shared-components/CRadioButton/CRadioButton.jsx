@@ -6,7 +6,7 @@ export default function CRadioButton({ value, checked, register, control, forVal
     const { errors } = useFormState({control});
   return (
     <CRadioButtonStyled>
-      <input type='radio' id={forValue} {...register} required={required} value={value} defaultChecked={checked}></input>
+      <input className={errors[register.name] ? 'error' : null} type='radio' id={forValue} {...register} required={required} value={value} defaultChecked={checked}></input>
       <label htmlFor={forValue}></label>
     </CRadioButtonStyled>
   )
