@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ViewPollStyled } from './ViewPoll.styled'
 import { useParams } from 'react-router-dom'
 import useSignalR from '../../hooks/useSignalR';
 import CRadioButton from '../../shared-components/CRadioButton/CRadioButton';
 import { useForm } from 'react-hook-form';
 import CButton from '../../shared-components/CButton/CButton';
-import GlobalLoader from '../../shared-components/GlobalLoader/GlobalLoader'
 
 export default function ViewPoll() {
     let params = useParams();
@@ -18,8 +17,15 @@ export default function ViewPoll() {
             selectedOption: {}
         }
     });
+    //NEED REFACTOR THERE
+    useEffect(() => {
+        if(data?.userVote && isResult == null) {
+            onToggleResultVote();
+        }
+    }, [data]);
 
     if(data == null) return null;
+
     function onSubmit(data) {
         onVote(JSON.parse(data.selectedOption));
         setisResult(true);
@@ -42,7 +48,7 @@ export default function ViewPoll() {
                 <div className='result' style={isResult ? null : { left: '-100%', position: "fixed" }}>
                     {data.options.map((option, index) => {
                         return (
-                            <>
+                            <React.Fragment key={index}>
                                 <span key={index}>{option.value}</span>
                                 <div className='option-percentage'>
                                     <div className='percentage-bar-container'>
@@ -50,7 +56,7 @@ export default function ViewPoll() {
                                         <h5 style={isResult ? {left: `${option.precentage - 2}%`} : {left: 0}}>{option.precentage}%</h5>
                                     </div>
                                 </div>
-                            </>
+                            </React.Fragment>
                         )
                     })}
                     <div className='buttons-container'>
@@ -62,7 +68,7 @@ export default function ViewPoll() {
                         {data.options.map((option, index) => {
                             return (
                                 <div className='option-container' key={index}>
-                                    <CRadioButton register={register("selectedOption", { required: true })} forValue={index} control={control} value={JSON.stringify(option)} ></CRadioButton>
+                                    <CRadioButton register={register("selectedOption", { required: true })} forValue={index} control={control} checked={option.pollOptionId == data.userVote?.pollOptionId ? true : false} value={JSON.stringify(option)} ></CRadioButton>
                                     <span>{option.value}</span>
                                 </div>
                             )
