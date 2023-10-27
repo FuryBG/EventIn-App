@@ -5,7 +5,7 @@ let connection = new signalR.HubConnectionBuilder()
 .withUrl("https://localhost:7029/poll-event")
 .build();
 
-export default function useSignalR({pollGuid, onDataReceive}) {
+export default function useSignalR({pollGuid, onDataReceive, onException}) {
     let [pollEventData, setPollEventData] = useState();
 
     useEffect(() => {
@@ -22,6 +22,11 @@ export default function useSignalR({pollGuid, onDataReceive}) {
             await connection.start();
             connection.invoke("JoinRoom", pollGuid);
             connection.on("PollVote", (data) => onUpdateData(data));
+            connection.on("Exception", (err) => {
+                if(onException) {
+                    onException(err);
+                }
+            });
         }
         catch(err) {
             console.log(err);

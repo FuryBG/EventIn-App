@@ -11,7 +11,7 @@ export default function ViewPoll() {
     const { data, onVote } = useSignalR({
         pollGuid: params.eguid,
         onDataReceive: (data) => {
-            if (data?.userVote) {
+            if (data?.userVote && showResult == null) {
                 onToggleResultVote();
             }
         }
@@ -29,7 +29,6 @@ export default function ViewPoll() {
 
     function onSubmit(data) {
         onVote(JSON.parse(data.selectedOption));
-        setShowResult(true);
     }
 
     function onToggleResultVote() {
