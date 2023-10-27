@@ -5,7 +5,7 @@ let connection = new signalR.HubConnectionBuilder()
 .withUrl("https://localhost:7029/poll-event")
 .build();
 
-export default function useSignalR(pollGuid) {
+export default function useSignalR({pollGuid, onDataReceive}) {
     let [pollEventData, setPollEventData] = useState();
 
     useEffect(() => {
@@ -34,5 +34,8 @@ export default function useSignalR(pollGuid) {
 
     function onUpdateData(data) {
         setPollEventData(data);
+        if(onDataReceive) {
+            onDataReceive(data);
+        }
     }
 }

@@ -8,8 +8,15 @@ import CButton from '../../shared-components/CButton/CButton';
 
 export default function ViewPoll() {
     let params = useParams();
-    const { data, onVote } = useSignalR(params.eguid);
-    const [isResult, setisResult] = useState(null);
+    const { data, onVote } = useSignalR({
+        pollGuid: params.eguid,
+        onDataReceive: (data) => {
+            if (data?.userVote) {
+                onToggleResultVote();
+            }
+        }
+    });
+    const [showResult, setShowResult] = useState(null);
     const { register, control, handleSubmit, reset } = useForm({
         mode: 'onSubmit',
         values: {
@@ -17,22 +24,16 @@ export default function ViewPoll() {
             selectedOption: {}
         }
     });
-    //NEED REFACTOR THERE
-    useEffect(() => {
-        if(data?.userVote && isResult == null) {
-            onToggleResultVote();
-        }
-    }, [data]);
 
-    if(data == null) return null;
+    if (data == null) return null;
 
     function onSubmit(data) {
         onVote(JSON.parse(data.selectedOption));
-        setisResult(true);
+        setShowResult(true);
     }
 
     function onToggleResultVote() {
-        setisResult(prev => !prev);
+        setShowResult(prev => !prev);
     }
 
     return (
@@ -41,19 +42,19 @@ export default function ViewPoll() {
                 <header>
                     <span>What is your favorite color?</span>
                     <div>
-                    <span className='votes-count'>{data.votesCount}</span>
-                    <span className='poll-icon'></span>
+                        <span className='votes-count'>{data.votesCount}</span>
+                        <span className='poll-icon'></span>
                     </div>
                 </header>
-                <div className='result' style={isResult ? null : { left: '-100%', position: "fixed" }}>
+                <div className='result' style={showResult ? null : { left: '-100%', position: "fixed" }}>
                     {data.options.map((option, index) => {
                         return (
                             <React.Fragment key={index}>
                                 <span key={index}>{option.value}</span>
                                 <div className='option-percentage'>
                                     <div className='percentage-bar-container'>
-                                        <span className='bar' style={isResult ? { width: `${option.precentage}%` } : { width: 0 }}></span>
-                                        <h5 style={isResult ? {left: `${option.precentage - 2}%`} : {left: 0}}>{option.precentage}%</h5>
+                                        <span className='bar' style={showResult ? { width: `${option.precentage}%` } : { width: 0 }}></span>
+                                        <h5 style={showResult ? { left: `${option.precentage - 2}%` } : { left: 0 }}>{option.precentage}%</h5>
                                     </div>
                                 </div>
                             </React.Fragment>
@@ -63,7 +64,7 @@ export default function ViewPoll() {
                         <span onClick={onToggleResultVote}>Change Vote</span>
                     </div>
                 </div>
-                {!isResult ?
+                {!showResult ?
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {data.options.map((option, index) => {
                             return (
