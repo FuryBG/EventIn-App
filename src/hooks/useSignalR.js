@@ -2,7 +2,7 @@ import * as signalR from '@microsoft/signalr'
 import { useEffect, useState } from 'react'
 
 let connection = new signalR.HubConnectionBuilder()
-.withUrl("https://localhost:7029/poll-event")
+.withUrl("https://192.168.0.131:7029/poll-event")
 .build();
 
 export default function useSignalR({pollGuid, onDataReceive, onException}) {

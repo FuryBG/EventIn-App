@@ -34,6 +34,7 @@ const StyledNavBar = styled.nav`
             font-family: var(--icon-family);
             content: var(--icon-hamburger);
             cursor: pointer;
+            color: black;
         }
         .exit-container {
             position: absolute;
@@ -44,6 +45,7 @@ const StyledNavBar = styled.nav`
             font-family: var(--icon-family);
             content: var(--icon-exit);
             cursor: pointer;
+            color: black;
         }
         .mobile-menu {
             box-shadow: 0.125rem 0.125rem 0.125rem rgba(0,0,0,.1);
