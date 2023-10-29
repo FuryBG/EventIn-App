@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 const StyledNavBar = styled.nav`
         display: flex;
+        background-color: white;
         justify-content: space-around;
         position: sticky;
         z-index: 1;

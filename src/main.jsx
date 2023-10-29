@@ -66,7 +66,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <PrimeReactProvider>
     <AuthContextProvider>
       <ToastContextProvider>
-        <img src='/src/assets/beta.png' style={{ position: "fixed", right: 0, height: "4rem" }}></img>
+        <img src='/src/assets/beta.png' style={{ position: "fixed", right: 0, height: "4rem", zIndex: 2 }}></img>
         <RouterProvider router={router}></RouterProvider>
       </ToastContextProvider>
     </AuthContextProvider>
