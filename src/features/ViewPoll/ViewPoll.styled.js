@@ -8,7 +8,7 @@ const ViewPollStyled = styled.div`
     color: white;
     padding: 1.5rem;
     >div {
-        padding: 4rem 10.5rem;
+        margin: 1.5rem;
         >header {
             display: flex;
             justify-content: space-between;
