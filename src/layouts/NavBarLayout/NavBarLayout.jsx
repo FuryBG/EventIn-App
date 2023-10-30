@@ -56,7 +56,7 @@ export default function NavBarLayout() {
             {
               isAuthenticated ?
                 <div className='link-container'>
-                <Link to={"/auth/logout"}>Logout</Link>
+                <Link onClick={onLogout}>Logout</Link>
                 </div>
                 :
                 <>
