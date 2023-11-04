@@ -13,6 +13,7 @@ import { useMutation, useQuery } from 'react-query';
 import { getUserPolls, updatePoll } from '../../services/pollService';
 import { useToast } from '../../hooks/useToast';
 import { useNavigate } from 'react-router-dom';
+import { resetVotes } from '../../services/voteService';
 
 export default function Home() {
   const [selected, setSelected] = useState(null);
@@ -45,6 +46,16 @@ export default function Home() {
       }
     }
   });
+
+  const { mutate: mutateResetVotes } = useMutation({
+    mutationKey: ["events"],
+    mutationFn: (data) => resetVotes(data),
+    onError: (error) => {
+      toastApi({severity: 'error', detail: 'Cannot reset votes! Please try again later.'});
+    },
+    onSuccess: (data) => {
+      toastApi({severity: 'success', detail: 'Votes are successfully reset!'});
+  }});
 
   function onEdit(row) {
     setSelected(row);
@@ -84,6 +95,10 @@ export default function Home() {
   function onPlay(row) {
     row.isActive = true;
     mutate(row);
+  }
+
+  function onReset(row) {
+    mutateResetVotes(row.pollEventId);
   }
 
   function onStop(row) {
