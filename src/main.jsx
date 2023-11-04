@@ -22,7 +22,6 @@ const router = createBrowserRouter([
     element: <App></App>,
     children: [
       {
-        path: "/",
         element: <NavBarLayout />,
         children: [
           {
