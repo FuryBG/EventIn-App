@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import GlobalLoader from './shared-components/GlobalLoader/GlobalLoader';
 import NotFound from './shared-components/NotFound/NotFound';
 import ViewPoll from './features/ViewPoll/ViewPoll';
+import ProtectedRoute from './guards/ProtectedRoute.jsx';
 
 const Login = React.lazy(() => import('./pages/Login/Login'))
 const Register = React.lazy(() => import('./pages/Register/Register'))
@@ -34,8 +35,13 @@ const router = createBrowserRouter([
         path: "/auth",
         children: [
           {
-            path: "login",
-            element: <Suspense fallback={<GlobalLoader></GlobalLoader>}><Login /></Suspense>
+            element: <ProtectedRoute authAccess={false}></ProtectedRoute>,
+            children: [
+              {
+                path: "login",
+                element: <Suspense fallback={<GlobalLoader></GlobalLoader>}><Login /></Suspense>
+              }
+            ]
           },
           {
             path: "register",
