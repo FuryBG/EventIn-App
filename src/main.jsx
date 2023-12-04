@@ -14,8 +14,6 @@ import NotFound from './shared-components/NotFound/NotFound';
 import ViewPoll from './features/ViewPoll/ViewPoll';
 import ProtectedRoute from './guards/ProtectedRoute.jsx';
 
-const Login = React.lazy(() => import('./pages/Login/Login'))
-const Register = React.lazy(() => import('./pages/Register/Register'))
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -28,24 +26,6 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <Home />
-          }
-        ]
-      },
-      {
-        path: "/auth",
-        children: [
-          {
-            element: <ProtectedRoute authAccess={false}></ProtectedRoute>,
-            children: [
-              {
-                path: "login",
-                element: <Suspense fallback={<GlobalLoader></GlobalLoader>}><Login /></Suspense>
-              }
-            ]
-          },
-          {
-            path: "register",
-            element: <Suspense fallback={<GlobalLoader></GlobalLoader>}><Register /></Suspense>
           }
         ]
       },
