@@ -1,26 +1,17 @@
 import React from 'react'
-import { Outlet, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
+import { loginUrl } from '../services/authService';
 
-export default function ProtectedRoute({ authAccess }) {
+export default function ProtectedRoute( { children } ) {
     const { isAuthenticated, isLoading } = useAuthContext();
 
     if(isLoading) return null;
 
-    if(authAccess) {
-        if(isAuthenticated) {
-            return <Outlet />
-        }
-        else {
-            return <Navigate to={"/auth/login"}></Navigate>
-        }
+    if(isAuthenticated) {
+        return children
     }
     else {
-        if(isAuthenticated) {
-            return <Navigate to={"/"}></Navigate>
-        }
-        else {
-            return <Outlet />
-        }
+        location.href = loginUrl;
     }
 }

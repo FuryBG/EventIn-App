@@ -1,5 +1,8 @@
 import axios from "../lib/axios";
 
+const loginUrl = "https://localhost:7029/account/login";
+const registerUrl = "https://localhost:7029/account/register";
+
 function getUserDetails() {
     return axios.get("account/getUser");
 }
@@ -15,5 +18,7 @@ function logout() {
 export {
     getUserDetails,
     login,
-    logout
+    logout,
+    loginUrl,
+    registerUrl
 }
