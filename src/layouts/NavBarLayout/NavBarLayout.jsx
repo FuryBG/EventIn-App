@@ -35,16 +35,7 @@ export default function NavBarLayout() {
         <div className='main-menu'>
           <Link to={"/analytics"}>Analytics</Link>
         </div>
-        { isAuthenticated ?
-              <div className='user-menu'>
-                <Link onClick={onLogout}>Logout</Link>
-              </div>
-              :
-              <div className='user-menu'>
-                <Link to={"/auth/login"}>Login</Link>
-                <Link to={"/auth/register"}>Register</Link>
-              </div>
-        }
+        {/* THERE SHOULD BE USER CIRCLE MAYBE */}
         <div className={isActive ? 'mobile-menu mobile-active' : 'mobile-menu'}>
           <div onClick={() => toggleMenu(false)} className='exit-container'>
             <span className='exit-menu'></span>
@@ -53,21 +44,7 @@ export default function NavBarLayout() {
             <div className='link-container'>
               <Link to={"/analytics"}>Analytics</Link>
             </div>
-            {
-              isAuthenticated ?
-                <div className='link-container'>
-                <Link onClick={onLogout}>Logout</Link>
-                </div>
-                :
-                <>
-                <div className='link-container'>
-                  <Link to={"/auth/login"}>Login</Link>
-                </div>
-                <div className='link-container'>
-                  <Link to={"/auth/register"}>Register</Link>
-                </div>
-                </>
-            }
+        {/* THERE SHOULD BE USER CIRCLE MAYBE */}
             <div className='footer'>
               <span className='facebook'></span>
             </div>
