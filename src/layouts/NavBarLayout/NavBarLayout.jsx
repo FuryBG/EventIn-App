@@ -18,7 +18,7 @@ export default function NavBarLayout() {
     logout().then(r => {
       location.replace("/");
     }).catch(r => {
-      console.log("wtf?");
+      console.log("log out error" + r);
     })
   }
   return (

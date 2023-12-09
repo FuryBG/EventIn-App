@@ -5,8 +5,9 @@ const InputWrapper = styled.div`
     flex-direction: column;
     margin-bottom: 0.2rem;
     input {
-        border: solid 1.5px gray;
-        border-radius: 0.2rem;
+        border: none;
+        outline: none;
+        border-bottom: 3px solid purple;
         padding: 0.5rem;
         &.error {
             border-color: red;
