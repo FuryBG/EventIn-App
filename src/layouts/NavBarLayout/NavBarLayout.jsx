@@ -4,7 +4,7 @@ import { StyledNavBar } from './NavBarLayout.styled';
 import { useAuthContext } from '../../context/AuthContext';
 import { logout } from '../../services/authService';
 
-export default function NavBarLayout() {
+export default function NavBarLayout({ children }) {
   const [isActive, setIsActive] = useState(null);
   const { isAuthenticated, isLoading } = useAuthContext();
 
@@ -51,7 +51,7 @@ export default function NavBarLayout() {
           </div>
         </div>
       </StyledNavBar>
-      <Outlet />
+      { children }
     </>
   )
 }

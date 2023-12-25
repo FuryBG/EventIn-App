@@ -39,7 +39,7 @@ export default function ViewPoll() {
         <ViewPollStyled>
             <div>
                 <header>
-                    <span>What is your favorite color?</span>
+                    <span>{data.title}</span>
                     <div>
                         <span className='votes-count'>{data.votesCount}</span>
                         <span className='poll-icon'></span>
