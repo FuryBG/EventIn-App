@@ -21,13 +21,8 @@ const router = createBrowserRouter([
     element: <App></App>,
     children: [
       {
-        element: <NavBarLayout />,
-        children: [
-          {
-            path: "/",
-            element: <ProtectedRoute authAccess={true}><Home /></ProtectedRoute>
-          }
-        ]
+        path: "/",
+        element: <ProtectedRoute authAccess={true}><NavBarLayout><Home /></NavBarLayout></ProtectedRoute>
       },
       {
         path: "/event",

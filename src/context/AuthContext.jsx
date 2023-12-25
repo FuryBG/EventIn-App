@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { getUserDetails } from '../services/authService'
 import { useQuery } from 'react-query';
+import GlobalLoader from '../shared-components/GlobalLoader/GlobalLoader';
 const AuthContext = React.createContext();
 
 export function useAuthContext() {
@@ -21,6 +22,8 @@ export default function AuthContextProvider({ children }) {
     retry: false
     
   });
+
+  if(isLoading) return <GlobalLoader />
 
   return (
     <AuthContext.Provider value={{ data, isLoading, isAuthenticated, setisAuthenticated, refetch }}>
