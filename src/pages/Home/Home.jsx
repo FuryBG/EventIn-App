@@ -14,12 +14,14 @@ import { getUserPolls, updatePoll } from '../../services/pollService';
 import { useToast } from '../../hooks/useToast';
 import { useNavigate } from 'react-router-dom';
 import { resetVotes } from '../../services/voteService';
+import InvitePollModal from '../../features/Invite/InvitePollModal';
 
 export default function Home() {
-  const [selected, setSelected] = useState(null);
-  const [showDialogCreate, setShowDialogCreate] = useState(null);
+  const [selected, setSelected] = useState();
+  const [showDialogCreate, setShowDialogCreate] = useState();
   const [showDialogEdit, setShowDialogEdit] = useState();
-  const [showDialogDelete, setShowDialogDelete] = useState(null);
+  const [showDialogDelete, setShowDialogDelete] = useState();
+  const [showDialogInvite, setShowDialogInvite] = useState();
   const toastApi = useToast();
   const navigate = useNavigate();
   const { data, isError, isLoading, refetch } = useQuery({
@@ -67,6 +69,11 @@ export default function Home() {
     setShowDialogDelete(true);
   }
 
+  function onInvite(row) {
+    setSelected(row);
+    setShowDialogInvite(true);
+  }
+
   function onToggleCreatePollDialog() {
     setShowDialogCreate(show => !show);
     if(showDialogCreate) {
@@ -76,6 +83,13 @@ export default function Home() {
 
   function onToggleDeletePollDialog() {
     setShowDialogDelete(p => !p);
+    if(showDialogDelete) {
+      setSelected(null);
+    }
+  }
+
+  function onToggleInviteModal() {
+    setShowDialogInvite(p => !p);
     if(showDialogDelete) {
       setSelected(null);
     }
@@ -120,6 +134,7 @@ export default function Home() {
             { label: "Reset Results", command: () => onReset(rowData) },
             { label: "Edit", command: () => onEdit(rowData) },
             { label: "Delete", command: () => onDelete(rowData) },
+            { label: "Invite", command: () => onInvite(rowData) }
           ] }
           ></CMiniMenu>}></Column>
       </CResultTable>
@@ -127,6 +142,7 @@ export default function Home() {
       <CreatePollModal visible={showDialogCreate} header={"Create Poll"} onHide={onToggleCreatePollDialog}></CreatePollModal>
       <EditPollModal visible={showDialogEdit} header={"Edit Poll"} onHide={onToggleEditPollDialog} pollData={selected}></EditPollModal>
       <DeletePollModal visible={showDialogDelete} header={"Are you sure to delete?"} onHide={onToggleDeletePollDialog} pollData={selected}></DeletePollModal>
+      <InvitePollModal visible={showDialogInvite} header={"Invite"} onHide={onToggleInviteModal} pollData={selected}></InvitePollModal>
     </StyledHome>
   )
 }

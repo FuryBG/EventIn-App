@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App';
@@ -9,7 +9,6 @@ import AuthContextProvider from './context/AuthContext.jsx';
 import ToastContextProvider from './context/ToastContext';
 import { PrimeReactProvider } from 'primereact/api';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import GlobalLoader from './shared-components/GlobalLoader/GlobalLoader';
 import NotFound from './shared-components/NotFound/NotFound';
 import ViewPoll from './features/ViewPoll/ViewPoll';
 import ProtectedRoute from './guards/ProtectedRoute.jsx';

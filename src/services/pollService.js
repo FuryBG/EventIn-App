@@ -25,5 +25,5 @@ export {
     createPoll,
     updatePoll,
     deletePoll,
-    getPollById
+    getPollById,
 }

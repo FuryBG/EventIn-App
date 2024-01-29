@@ -64,7 +64,7 @@ export default function CreatePollModal({ visible, header, onHide }) {
   };
 
   return (
-    <Dialog visible={visible} onHide={onHideModal} draggable={false} style={{ width: '50vh', height: '500px' }} header={header}>
+    <Dialog focusOnShow={false} visible={visible} onHide={onHideModal} draggable={false} style={{ width: '50vh', height: '500px' }} header={header}>
       <CreatePollModalStyled>
         <form onSubmit={handleSubmit(onSubmit,onErrors)}>
           <div>

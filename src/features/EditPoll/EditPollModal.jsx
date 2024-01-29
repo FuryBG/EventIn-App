@@ -63,7 +63,7 @@ export default function EditPollModal({ visible, header, pollData, onHide }) {
   };
 
   return (
-    <Dialog visible={visible} header={header} onHide={onHideModal} draggable={false} style={{ width: '50vh', height: '500px' }}>
+    <Dialog focusOnShow={false} visible={visible} header={header} onHide={onHideModal} draggable={false} style={{ width: '50vh', height: '500px' }}>
         <EditPollModalStyled>
         <form onSubmit={handleSubmit(onEdit,onErrors)}>
           <div>

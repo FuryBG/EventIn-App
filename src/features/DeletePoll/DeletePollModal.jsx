@@ -24,7 +24,7 @@ export default function DeletePollModal({ visible, header, pollData, onHide }) {
   }
 
   return (
-    <Dialog visible={visible} header={header} onHide={onHide} draggable={false} style={{ width: '50vh' }}>
+    <Dialog focusOnShow={false} visible={visible} header={header} onHide={onHide} draggable={false} style={{ width: '50vh' }}>
         <DeletePollModalStyled>
             <CButton disabled={isLoading ? true : false} isLoading={isLoading} onClick={onDelete} text={"Delete"}></CButton>
             <span onClick={onHide}>Cancel</span>

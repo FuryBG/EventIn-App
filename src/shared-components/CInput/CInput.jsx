@@ -2,7 +2,7 @@ import { InputWrapper } from './CInput.styled';
 import { useFormState, useWatch } from 'react-hook-form';
 import { useDebounce } from '../../hooks/useDebounce';
 
-export default function CInput({ inputKey, register, control, type, required, placeholder, isDynamic, watchDebounced }) {
+export default function CInput({ inputKey, register, control, type, required, placeholder, isDynamic, watchDebounced, disabled, value }) {
     const { errors } = useFormState({control});
     const watchedValue = useWatch({ name: register.name, control: control });
 
@@ -26,7 +26,7 @@ export default function CInput({ inputKey, register, control, type, required, pl
   return (
     <>
         <InputWrapper>
-        <input  {...register} type={type} className={haveError ? 'error' : ''} placeholder={placeholder}></input>
+        <input {...register} type={type} className={haveError ? 'error' : ''} placeholder={placeholder}></input>
         {required ? <span className={haveError ? 'error' : ''} >Required*</span> : null}
         </InputWrapper>
     </>
